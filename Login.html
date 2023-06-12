@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+    <title>Página de Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: black;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        form {
+            background-color: gray;
+            color: black;
+            padding: 20px;
+            margin: 50px auto;
+            max-width: 400px;
+            border-radius: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"], input[type="password"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+        }
+
+        input[type="submit"] {
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: black;
+        }
+
+        .msg-login {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .msg-login.aprovado {
+            background-color: green;
+        }
+
+        .senha-requisitos {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #ffcc00;
+        }
+
+        .senha-requisitos ul {
+            margin-left: 20px;
+            list-style: disc outside;
+        }
+
+        .senha-requisitos li {
+            margin-bottom: 5px;
+        }
+
+        .senha-requisitos strong {
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 600px) {
+            form {
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>𝙈𝙚𝙜𝙖 𝙡𝙤𝙜𝙞𝙣</h1>
+    <form>
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required>
+        <div class="senha-requisitos">
+            <ul>
+                <li><strong>A senha deve conter pelo menos:</strong></li>
+                <li>8 caracteres</li>
+                <li>1 letra maiúscula</li>
+                <li>1 letra minúscula</li>
+                <li>1 número</li>
+                <li>1 símbolo (!@#$%^&*)</li>
+            </ul>
+        </div>
+
+        <input type="submit" value="Entrar">
+    </form>
+    <div class="msg-login">
+        Seu login foi aprovado. Por favor, retorne com nosso vendedor.
+    </div>
+    <script>
+        var form = document.querySelector('form');
+        var password = document.getElementById('password');
+        var msg = document.querySelector('.msg-login');
+        var requisitos = document.querySelector('.senha-requisitos');
+        var error = "Senha incorreta. Verifique se sua senha possui os requisitos necessários.";
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var validPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.!@#$%^&*])[A-Za-z\d.!@#$%^&*]{8,}$/;
+
+            if (password.value.match(validPassword)) {
+                msg.classList.add('aprovado');
+                msg.style.display = 'block';
+
+                setTimeout(function() {
+                    msg.style.display = 'none';
+                    msg.classList.remove('aprovado');
+                }, 5000);
+            } else {
+                requisitos.style.display = 'block';
+                msg.style.display = 'block';
+                msg.classList.remove('aprovado');
+                msg.style.backgroundColor = 'red';
+                msg.innerHTML = error;
+            }
+        });
+    </script>
+</body>
+</html>
